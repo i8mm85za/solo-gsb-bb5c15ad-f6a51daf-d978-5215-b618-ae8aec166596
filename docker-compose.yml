@@ -1,0 +1,17 @@
+services:
+  centrifuge-bench:
+    build: .
+    image: centrifuge-balance-bench:latest
+    container_name: centrifuge-balance-bench
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/health"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
